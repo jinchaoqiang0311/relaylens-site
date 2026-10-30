@@ -1,0 +1,197 @@
+{
+  "dataKind": "ready",
+  "generatedAt": "2026-10-30T08:00:00Z",
+  "notice": "DEMO DATA — all stations below are fictional placeholders. No real relay is evaluated, endorsed, or defamed by this file.",
+  "model": { "id": "gpt-5-6-sol", "name": "GPT-5.6 Sol" },
+  "models": [
+    { "id": "gpt-5-6-sol", "name": "GPT-5.6 Sol" },
+    { "id": "claude-opus-5", "name": "Claude Opus 5" },
+    { "id": "deepseek-v4", "name": "DeepSeek V4" }
+  ],
+  "rows": [
+    {
+      "rank": 1,
+      "channelId": "aurora-api",
+      "officialName": "Aurora API",
+      "stationId": "aurora-main",
+      "stationName": "Aurora · Main",
+      "modelId": "gpt-5-6-sol",
+      "publishedAt": "2026-10-30T08:00:00Z",
+      "measuredAt": "2026-10-30T07:55:12Z",
+      "availability": { "status": "published", "value": 9982 },
+      "sampleSize": 4180,
+      "inputPrice": { "status": "published", "amountMajor": "3.50", "currency": "USD", "unit": "per_1m_tokens" },
+      "outputPrice": { "status": "published", "amountMajor": "14.00", "currency": "USD", "unit": "per_1m_tokens" },
+      "operations": { "statusWindows": ["ok","ok","ok","ok","ok","delayed","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"] },
+      "stationDetails": { "evaluationMode": "measured", "websiteUrl": "https://example.com/aurora", "baseUrl": "https://api.aurora.example.com/v1" },
+      "latency": { "p50Ms": 820, "p95Ms": 2100 },
+      "multiplier": 1.0,
+      "authenticity": { "status": "passed", "checks": [
+        { "name": "long-context", "status": "passed" },
+        { "name": "reasoning-signature", "status": "passed" },
+        { "name": "canary-token", "status": "passed" }
+      ] }
+    },
+    {
+      "rank": 2,
+      "channelId": "meridian-relay",
+      "officialName": "Meridian Relay",
+      "stationId": "meridian-global",
+      "stationName": "Meridian · Global",
+      "modelId": "gpt-5-6-sol",
+      "publishedAt": "2026-10-30T08:00:00Z",
+      "measuredAt": "2026-10-30T07:54:40Z",
+      "availability": { "status": "published", "value": 9951 },
+      "sampleSize": 3902,
+      "inputPrice": { "status": "published", "amountMajor": "2.80", "currency": "USD", "unit": "per_1m_tokens" },
+      "outputPrice": { "status": "published", "amountMajor": "11.20", "currency": "USD", "unit": "per_1m_tokens" },
+      "operations": { "statusWindows": ["ok","ok","ok","ok","delayed","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"] },
+      "stationDetails": { "evaluationMode": "measured", "websiteUrl": "https://example.com/meridian", "baseUrl": "https://relay.meridian.example.com/v1" },
+      "latency": { "p50Ms": 910, "p95Ms": 2600 },
+      "multiplier": 0.8,
+      "authenticity": { "status": "passed", "checks": [
+        { "name": "long-context", "status": "passed" },
+        { "name": "reasoning-signature", "status": "passed" },
+        { "name": "canary-token", "status": "passed" }
+      ] }
+    },
+    {
+      "rank": 3,
+      "channelId": "northwind-gateway",
+      "officialName": "Northwind Gateway",
+      "stationId": "northwind-fast",
+      "stationName": "Northwind · Fast",
+      "modelId": "gpt-5-6-sol",
+      "publishedAt": "2026-10-30T08:00:00Z",
+      "measuredAt": "2026-10-30T07:53:02Z",
+      "availability": { "status": "published", "value": 9873 },
+      "sampleSize": 4011,
+      "inputPrice": { "status": "published", "amountMajor": "3.10", "currency": "USD", "unit": "per_1m_tokens" },
+      "outputPrice": { "status": "published", "amountMajor": "12.40", "currency": "USD", "unit": "per_1m_tokens" },
+      "operations": { "statusWindows": ["ok","ok","ok","delayed","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"] },
+      "stationDetails": { "evaluationMode": "measured", "websiteUrl": "https://example.com/northwind", "baseUrl": "https://gw.northwind.example.com/v1" },
+      "latency": { "p50Ms": 1150, "p95Ms": 3400 },
+      "multiplier": 0.9,
+      "authenticity": { "status": "unknown", "checks": [
+        { "name": "long-context", "status": "passed" },
+        { "name": "reasoning-signature", "status": "unknown" },
+        { "name": "canary-token", "status": "passed" }
+      ] }
+    },
+    {
+      "rank": 4,
+      "channelId": "prism-endpoint",
+      "officialName": "Prism Endpoint",
+      "stationId": "prism-standard",
+      "stationName": "Prism · Standard",
+      "modelId": "gpt-5-6-sol",
+      "publishedAt": "2026-10-30T08:00:00Z",
+      "measuredAt": "2026-10-30T07:52:31Z",
+      "availability": { "status": "published", "value": 9802 },
+      "sampleSize": 3755,
+      "inputPrice": { "status": "published", "amountMajor": "2.10", "currency": "USD", "unit": "per_1m_tokens" },
+      "outputPrice": { "status": "published", "amountMajor": "8.40", "currency": "USD", "unit": "per_1m_tokens" },
+      "operations": { "statusWindows": ["ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"] },
+      "stationDetails": { "evaluationMode": "measured", "websiteUrl": "https://example.com/prism", "baseUrl": "https://api.prism.example.com/v1" },
+      "latency": { "p50Ms": 1420, "p95Ms": 4100 },
+      "multiplier": 0.6,
+      "authenticity": { "status": "failed", "checks": [
+        { "name": "long-context", "status": "failed" },
+        { "name": "reasoning-signature", "status": "passed" },
+        { "name": "canary-token", "status": "failed" }
+      ] }
+    },
+    {
+      "rank": 5,
+      "channelId": "quanta-bridge",
+      "officialName": "Quanta Bridge",
+      "stationId": "quanta-primary",
+      "stationName": "Quanta · Primary",
+      "modelId": "gpt-5-6-sol",
+      "publishedAt": "2026-10-30T08:00:00Z",
+      "measuredAt": "2026-10-30T07:51:19Z",
+      "availability": { "status": "published", "value": 9744 },
+      "sampleSize": 3680,
+      "inputPrice": { "status": "published", "amountMajor": "1.80", "currency": "USD", "unit": "per_1m_tokens" },
+      "outputPrice": { "status": "published", "amountMajor": "7.20", "currency": "USD", "unit": "per_1m_tokens" },
+      "operations": { "statusWindows": ["ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"] },
+      "stationDetails": { "evaluationMode": "measured", "websiteUrl": "https://example.com/quanta", "baseUrl": "https://bridge.quanta.example.com/v1" },
+      "latency": { "p50Ms": 1610, "p95Ms": 4800 },
+      "multiplier": 0.5,
+      "authenticity": { "status": "passed", "checks": [
+        { "name": "long-context", "status": "passed" },
+        { "name": "reasoning-signature", "status": "passed" },
+        { "name": "canary-token", "status": "passed" }
+      ] }
+    },
+    {
+      "rank": 6,
+      "channelId": "sable-inference",
+      "officialName": "Sable Inference",
+      "stationId": "sable-main",
+      "stationName": "Sable · Main",
+      "modelId": "gpt-5-6-sol",
+      "publishedAt": "2026-10-30T08:00:00Z",
+      "measuredAt": "2026-10-30T07:50:44Z",
+      "availability": { "status": "published", "value": 9612 },
+      "sampleSize": 3412,
+      "inputPrice": { "status": "published", "amountMajor": "2.40", "currency": "USD", "unit": "per_1m_tokens" },
+      "outputPrice": { "status": "published", "amountMajor": "9.60", "currency": "USD", "unit": "per_1m_tokens" },
+      "operations": { "statusWindows": ["ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"] },
+      "stationDetails": { "evaluationMode": "measured", "websiteUrl": "https://example.com/sable", "baseUrl": "https://infer.sable.example.com/v1" },
+      "latency": { "p50Ms": 1980, "p95Ms": 5600 },
+      "multiplier": 0.7,
+      "authenticity": { "status": "unknown", "checks": [
+        { "name": "long-context", "status": "unknown" },
+        { "name": "reasoning-signature", "status": "unknown" },
+        { "name": "canary-token", "status": "passed" }
+      ] }
+    },
+    {
+      "rank": 7,
+      "channelId": "tidal-nodes",
+      "officialName": "Tidal Nodes",
+      "stationId": "tidal-edge",
+      "stationName": "Tidal · Edge",
+      "modelId": "gpt-5-6-sol",
+      "publishedAt": "2026-10-30T08:00:00Z",
+      "measuredAt": "2026-10-30T07:49:28Z",
+      "availability": { "status": "published", "value": 9501 },
+      "sampleSize": 3208,
+      "inputPrice": { "status": "published", "amountMajor": "1.50", "currency": "USD", "unit": "per_1m_tokens" },
+      "outputPrice": { "status": "published", "amountMajor": "6.00", "currency": "USD", "unit": "per_1m_tokens" },
+      "operations": { "statusWindows": ["ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"] },
+      "stationDetails": { "evaluationMode": "measured", "websiteUrl": "https://example.com/tidal", "baseUrl": "https://node.tidal.example.com/v1" },
+      "latency": { "p50Ms": 2240, "p95Ms": 6900 },
+      "multiplier": 0.43,
+      "authenticity": { "status": "passed", "checks": [
+        { "name": "long-context", "status": "passed" },
+        { "name": "reasoning-signature", "status": "passed" },
+        { "name": "canary-token", "status": "passed" }
+      ] }
+    },
+    {
+      "rank": 8,
+      "channelId": "umbra-cloud",
+      "officialName": "Umbra Cloud",
+      "stationId": "umbra-shared",
+      "stationName": "Umbra · Shared",
+      "modelId": "gpt-5-6-sol",
+      "publishedAt": "2026-10-30T08:00:00Z",
+      "measuredAt": "2026-10-30T07:48:10Z",
+      "availability": { "status": "published", "value": 9320 },
+      "sampleSize": 2980,
+      "inputPrice": { "status": "published", "amountMajor": "1.20", "currency": "USD", "unit": "per_1m_tokens" },
+      "outputPrice": { "status": "published", "amountMajor": "4.80", "currency": "USD", "unit": "per_1m_tokens" },
+      "operations": { "statusWindows": ["ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"] },
+      "stationDetails": { "evaluationMode": "measured", "websiteUrl": "https://example.com/umbra", "baseUrl": "https://cloud.umbra.example.com/v1" },
+      "latency": { "p50Ms": 2710, "p95Ms": 8200 },
+      "multiplier": 0.34,
+      "authenticity": { "status": "failed", "checks": [
+        { "name": "long-context", "status": "failed" },
+        { "name": "reasoning-signature", "status": "failed" },
+        { "name": "canary-token", "status": "passed" }
+      ] }
+    }
+  ]
+}

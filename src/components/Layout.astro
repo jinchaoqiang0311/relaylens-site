@@ -1,0 +1,45 @@
+---
+import '../styles/global.css'
+import { dictionaries, type Locale } from '../lib/i18n'
+
+interface Props {
+  lang: Locale
+  title: string
+  active: 'board' | 'method'
+}
+
+const { lang, title, active } = Astro.props
+const t = dictionaries[lang]
+const other = lang === 'zh' ? 'en' : 'zh'
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={t.brandSub} />
+    <link rel="alternate" hreflang={other} href={`${base}/${other}/`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrap">
+      <slot />
+      <footer class="foot">
+        <span>{t.footerNoSponsor}</span>
+        <span>
+          <a href={`${base}/rankings.json`}>{t.footerData}</a>
+          ·
+          <a href="https://github.com/jinchaoqiang0311/relaylens-site">{t.footerRepo}</a>
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>

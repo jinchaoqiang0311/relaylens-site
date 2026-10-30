@@ -1,0 +1,130 @@
+---
+import Layout from '../../components/Layout.astro'
+import { dictionaries, isLocale, LOCALES, type Locale } from '../../lib/i18n'
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }))
+}
+
+const lang = Astro.params.lang as Locale
+if (!isLocale(lang)) return Astro.redirect('/zh/method')
+
+const t = dictionaries[lang]
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+
+const m =
+  lang === 'zh'
+    ? {
+        title: '测量方法',
+        sections: [
+          {
+            n: '01',
+            h: '可用率（基点）',
+            p: '每 60 秒向各站点的规范化端点发起一次最小对话请求。可用率 = 成功响应数 / 总请求数，以基点（bps）表示：9982 bps = 99.82%。样本量随行展示，低于 500 样本的行不参与排名。',
+          },
+          {
+            n: '02',
+            h: '延迟分位数',
+            p: 'P50/P95 基于流式响应：首 token 到达时间记为 TTFT，请求完成时间记为 TTC。两个指标各自取最近 24 小时窗口的分位数，剔除超时请求（超时计入不可用，不计入延迟）。',
+          },
+          {
+            n: '03',
+            h: '倍率',
+            p: '倍率 = 站点实际计费 / 上游官方标价（按输入输出加权，权重 1:4）。倍率低于 1 通常意味着补贴或掺假，高于 1 意味着加价。倍率本身不决定名次，只参与性价比展示。',
+          },
+          {
+            n: '04',
+            h: '真伪核验（本站核心）',
+            p: '三组探针：① 长上下文回读——注入 120K token 的随机事实，要求跨窗口复述；② 思维签名一致性——对推理模型比对官方端点与中转端点的签名结构；③ 金丝雀标记——用已知答案的隐藏提示词检测是否偷换小模型。任一失败标记为「未通过」，全部无法执行标记为「待测」。',
+          },
+          {
+            n: '05',
+            h: '数据契约',
+            p: '榜单由探针后端每日生成 rankings.json（UTC 08:00），本站与 RelayLens Switch 桌面端消费同一份文件。字段解析规则与桌面端 catalog.rs 保持一致：价格仅在 status=published 时展示；状态窗口最多 24 格；evaluationMode=catalog_only 的站点不进入榜单。',
+          },
+          {
+            n: '06',
+            h: '独立性声明',
+            p: '本站不接受中转站赞助、返利或广告。探针代码、评分脚本与原始测量数据全部开源。任何人都可以复跑测量并对比结果。',
+          },
+        ],
+      }
+    : {
+        title: 'Method',
+        sections: [
+          {
+            n: '01',
+            h: 'Availability (basis points)',
+            p: 'One minimal chat request per station every 60 seconds against the normalized endpoint. Availability = successful responses / total requests, in bps: 9982 bps = 99.82%. Sample size is shown per row; rows under 500 samples are excluded from ranking.',
+          },
+          {
+            n: '02',
+            h: 'Latency percentiles',
+            p: 'P50/P95 over streaming responses: time-to-first-token (TTFT) and time-to-completion (TTC), each as the 24-hour percentile. Timed-out requests count as unavailable and are excluded from latency.',
+          },
+          {
+            n: '03',
+            h: 'Multiplier',
+            p: 'Multiplier = station billing / upstream official list price, weighted 1:4 input:output. Below 1 suggests subsidy or adulteration; above 1 means markup. The multiplier never decides rank; it feeds value-for-money display.',
+          },
+          {
+            n: '04',
+            h: 'Authenticity probes (our core)',
+            p: 'Three families: (1) long-context recall — inject random facts at 120K tokens and require cross-window reproduction; (2) reasoning-signature consistency — compare official vs relayed signature structure for reasoning models; (3) canary tokens — hidden prompts with known answers that expose silently downgraded models. Any failure marks the station failed; all-inconclusive marks it pending.',
+          },
+          {
+            n: '05',
+            h: 'Data contract',
+            p: 'The probe backend emits rankings.json daily at 08:00 UTC; this site and the RelayLens Switch desktop app consume the same file. Parsing matches desktop catalog.rs: prices render only when status=published; status windows cap at 24 cells; catalog_only stations never enter the ledger.',
+          },
+          {
+            n: '06',
+            h: 'Independence',
+            p: 'No sponsorship, kickbacks, or ads from any relay. Probes, scoring scripts, and raw measurements are open source. Anyone can re-run the measurement and diff the results.',
+          },
+        ],
+      }
+---
+
+<Layout lang={lang} title={`${m.title} · ${t.brand}`} active="method">
+  <header class="masthead">
+    <h1>{m.title}</h1>
+    <p class="sub">{t.brandSub}</p>
+    <div class="mast-meta">
+      <span>{t.issueNo('—')}</span>
+      <nav>
+        <a href={`${base}/${lang}/`}>{t.navBoard}</a>
+        <a href={`${base}/${lang}/method`} aria-current="page">{t.navMethod}</a>
+        <a href={`${base}/${lang === 'zh' ? 'en' : 'zh'}/method`}>{t.langSwitch}</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="prose" style="margin-top:34px">
+    {
+      m.sections.map((s) => (
+        <>
+          <h2 data-n={s.n}>{s.h}</h2>
+          <p>{s.p}</p>
+        </>
+      ))
+    }
+    <h2 data-n="07">rankings.json</h2>
+    <pre><code>{`{
+  "dataKind": "ready",
+  "generatedAt": "2026-10-30T08:00:00Z",
+  "model": { "id": "gpt-5-6-sol", "name": "GPT-5.6 Sol" },
+  "rows": [{
+    "rank": 1, "channelId": "...", "stationId": "...",
+    "availability": { "status": "published", "value": 9982 },
+    "sampleSize": 4180,
+    "inputPrice": { "status": "published", "amountMajor": "3.50",
+                    "currency": "USD", "unit": "per_1m_tokens" },
+    "operations": { "statusWindows": ["ok", "... 24 cells"] },
+    "latency": { "p50Ms": 820, "p95Ms": 2100 },
+    "multiplier": 1.0,
+    "authenticity": { "status": "passed", "checks": [...] }
+  }]
+}`}</code></pre>
+  </div>
+</Layout>

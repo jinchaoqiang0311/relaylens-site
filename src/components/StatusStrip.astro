@@ -1,0 +1,26 @@
+---
+interface Props {
+  windows: string[]
+}
+
+const { windows } = Astro.props
+const cells = windows.slice(0, 24)
+---
+
+<div class="strip" role="img" aria-label="24h status">
+  {
+    cells.map((state) => (
+      <b
+        class={
+          state === 'ok'
+            ? ''
+            : state === 'delayed'
+              ? 'delayed'
+              : state === 'down'
+                ? 'down'
+                : 'unknown'
+        }
+      />
+    ))
+  }
+</div>

@@ -1,0 +1,141 @@
+---
+import Layout from '../../components/Layout.astro'
+import StatusStrip from '../../components/StatusStrip.astro'
+import { dictionaries, isLocale, LOCALES, type Locale } from '../../lib/i18n'
+import {
+  formatBps,
+  formatPrice,
+  issueDate,
+  loadCatalog,
+  minutesAgo,
+} from '../../lib/data'
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }))
+}
+
+const lang = Astro.params.lang as Locale
+if (!isLocale(lang)) return Astro.redirect('/zh/')
+
+const t = dictionaries[lang]
+const active = 'board'
+const catalog = loadCatalog()
+const now = new Date(catalog.generatedAt)
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+
+const checkLabels: Record<string, string> = {
+  'long-context': t.checkLongContext,
+  'reasoning-signature': t.checkReasoningSignature,
+  'canary-token': t.checkCanaryToken,
+}
+
+const authLabel = {
+  passed: t.authPassed,
+  failed: t.authFailed,
+  unknown: t.authUnknown,
+} as const
+---
+
+<Layout lang={lang} title={t.brand} active="board">
+  <header class="masthead">
+    <div class="stamp">{t.demoStamp}</div>
+    <h1>{t.brand}</h1>
+    <p class="sub">{t.brandSub}</p>
+    <div class="mast-meta">
+      <span>{t.issueNo(issueDate(catalog.generatedAt))}</span>
+      <nav>
+        <a href={`${base}/${lang}/`} aria-current={active === 'board' ? 'page' : undefined}>{t.navBoard}</a>
+        <a href={`${base}/${lang}/method`}>{t.navMethod}</a>
+        <a href={`${base}/${lang === 'zh' ? 'en' : 'zh'}/`}>{t.langSwitch}</a>
+      </nav>
+    </div>
+  </header>
+
+  <p class="banner">{t.demoBanner}</p>
+
+  <section class="ledger" aria-label="rankings">
+    <div class="ledger-head">
+      <span>{t.colRank}</span>
+      <span>{t.colStation}</span>
+      <span>{t.colAvail}</span>
+      <span>{t.colLatency}</span>
+      <span>{t.colMultiplier}</span>
+      <span>{t.colPrice}</span>
+      <span>{t.colAuthenticity}</span>
+      <span>{t.colStatus}</span>
+    </div>
+
+    {
+      catalog.rows.map((row, i) => {
+        const mins = minutesAgo(row.measuredAt, now)
+        const availPct = row.availability.value / 100
+        const barClass = availPct >= 99 ? '' : availPct >= 97 ? 'warn' : 'bad'
+        const input = formatPrice(row.inputPrice)
+        const output = formatPrice(row.outputPrice)
+        return (
+          <article class="row" style={`animation-delay: ${i * 70}ms`}>
+            <span class="rank">{String(row.rank).padStart(2, '0')}</span>
+            <div class="station">
+              <div class="name">{row.stationName}</div>
+              <div class="channel">
+                {row.channelId} · {row.officialName}
+              </div>
+              <span class="fresh">
+                <i class={`dot ${mins <= 15 ? '' : 'stale'}`} />
+                {t.freshness(t.freshnessMinutes(mins))}
+              </span>
+            </div>
+            <div class="avail">
+              <div class="num">{formatBps(row.availability.value)}</div>
+              <div class="bar">
+                <i class={barClass} style={`width: ${Math.min(100, availPct)}%`} />
+              </div>
+              <div class="samples">
+                {row.sampleSize.toLocaleString('en-US')} {t.availSuffix}
+              </div>
+            </div>
+            <div class="latency">
+              <div class="num">
+                <span class="p">P50</span>
+                {row.latency.p50Ms} ms
+              </div>
+              <div class="num">
+                <span class="p">P95</span>
+                {row.latency.p95Ms} ms
+              </div>
+            </div>
+            <div class="multiplier">
+              <div class="num">×{row.multiplier.toFixed(2)}</div>
+            </div>
+            <div class="price">
+              <div class="num">
+                <span class="lbl">in</span>
+                {input ?? t.priceUnpublished}
+              </div>
+              <div class="num">
+                <span class="lbl">out</span>
+                {output ?? t.priceUnpublished}
+              </div>
+            </div>
+            <div class="auth">
+              <span class={`auth-badge auth-${row.authenticity.status}`}>
+                {authLabel[row.authenticity.status]}
+              </span>
+              <div class="auth-checks">
+                {row.authenticity.checks.map((c) => (
+                  <i
+                    class={c.status === 'passed' ? 'pass' : c.status === 'failed' ? 'fail' : ''}
+                    title={checkLabels[c.name] ?? c.name}
+                  />
+                ))}
+              </div>
+            </div>
+            <div class="status">
+              <StatusStrip windows={row.operations.statusWindows} />
+            </div>
+          </article>
+        )
+      })
+    }
+  </section>
+</Layout>

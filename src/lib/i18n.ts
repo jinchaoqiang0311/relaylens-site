@@ -1,0 +1,83 @@
+export const LOCALES = ['zh', 'en'] as const
+export type Locale = (typeof LOCALES)[number]
+export const DEFAULT_LOCALE: Locale = 'zh'
+
+const zh = {
+  brand: 'RelayLens 中转站计量台账',
+  brandSub: '独立探针 · 不接赞助 · 数据可复现',
+  issueNo: (d: string) => `第 ${d} 期 · 每日 08:00 UTC 出版`,
+  demoStamp: '示例数据',
+  demoBanner: '本页全部为虚构示例站点，用于验证数据管线与版式。真实榜单待探针后端接入。',
+  colRank: '名次',
+  colStation: '站点 / 频道',
+  colAvail: '可用率',
+  colLatency: '延迟 P50 / P95',
+  colMultiplier: '倍率',
+  colPrice: '价格（输入/输出 · 每百万 token）',
+  colAuthenticity: '真伪核验',
+  colStatus: '近 24 小时状态',
+  availSuffix: '样本',
+  measuredAt: '测量于',
+  authPassed: '通过',
+  authFailed: '未通过',
+  authUnknown: '待测',
+  checkLongContext: '长上下文',
+  checkReasoningSignature: '思维签名',
+  checkCanaryToken: '金丝雀标记',
+  methodTitle: '测量方法',
+  methodLink: '完整方法论',
+  methodTeaser: '可用率按基点（bps）计；延迟取 60 秒窗口流式首 token 与完成时间分位；真伪核验包含长上下文回读、思维签名一致性与金丝雀标记三组探针。',
+  footerNoSponsor: '本站不接受任何中转站赞助或返利；排名仅由测量值决定。',
+  footerData: '数据契约',
+  footerRepo: '源码仓库',
+  navBoard: '榜单',
+  navMethod: '方法',
+  langSwitch: 'English',
+  officialName: '官方频道名',
+  priceUnpublished: '未公布',
+  freshness: (m: string) => `最近测量 ${m}`,
+  freshnessMinutes: (n: number) => `${n} 分钟前`,
+}
+
+const en: typeof zh = {
+  brand: 'RelayLens Relay Ledger',
+  brandSub: 'Independent probes · No sponsorship · Reproducible data',
+  issueNo: (d: string) => `Issue ${d} · Published daily 08:00 UTC`,
+  demoStamp: 'DEMO DATA',
+  demoBanner: 'Every station on this page is a fictional placeholder used to validate the data pipeline and layout. The real ledger ships with the probe backend.',
+  colRank: 'Rank',
+  colStation: 'Station / Channel',
+  colAvail: 'Availability',
+  colLatency: 'Latency P50 / P95',
+  colMultiplier: 'Multiplier',
+  colPrice: 'Price (in/out · per 1M tokens)',
+  colAuthenticity: 'Authenticity',
+  colStatus: 'Last 24h status',
+  availSuffix: 'samples',
+  measuredAt: 'measured',
+  authPassed: 'passed',
+  authFailed: 'failed',
+  authUnknown: 'pending',
+  checkLongContext: 'long-context',
+  checkReasoningSignature: 'reasoning signature',
+  checkCanaryToken: 'canary token',
+  methodTitle: 'Method',
+  methodLink: 'Full methodology',
+  methodTeaser: 'Availability is reported in basis points; latency uses streaming first-token and completion percentiles over a 60-second window; authenticity runs three probe families: long-context recall, reasoning-signature consistency, and canary tokens.',
+  footerNoSponsor: 'No relay pays for placement here; ranking is derived from measurements only.',
+  footerData: 'Data contract',
+  footerRepo: 'Source',
+  navBoard: 'Ledger',
+  navMethod: 'Method',
+  langSwitch: '中文',
+  officialName: 'Official channel name',
+  priceUnpublished: 'unpublished',
+  freshness: (m: string) => `last measured ${m}`,
+  freshnessMinutes: (n: number) => `${n} min ago`,
+}
+
+export const dictionaries: Record<Locale, typeof zh> = { zh, en }
+
+export function isLocale(value: string): value is Locale {
+  return (LOCALES as readonly string[]).includes(value)
+}
